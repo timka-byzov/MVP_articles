@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: mvp_postgres
+    environment:
+      POSTGRES_USER: mvp_user
+      POSTGRES_PASSWORD: mvp_password
+      POSTGRES_DB: mvp_articles
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mvp_user -d mvp_articles"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - mvp_network
+
+  backend:
+    build: ./backend
+    container_name: mvp_backend
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    volumes:
+      - ./backend:/app
+      - ./data:/data
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://mvp_user:mvp_password@postgres:5432/mvp_articles
+      SECRET_KEY: dev-secret-key-change-in-production-min-32-chars-long
+      CORS_ORIGINS: http://localhost:3000
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - mvp_network
+
+  frontend:
+    build: ./frontend
+    container_name: mvp_frontend
+    command: npm start
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    environment:
+      REACT_APP_API_URL: http://localhost:8000
+      CHOKIDAR_USEPOLLING: "true"
+    depends_on:
+      - backend
+    networks:
+      - mvp_network
+
+volumes:
+  postgres_data:
+
+networks:
+  mvp_network:
+    driver: bridge

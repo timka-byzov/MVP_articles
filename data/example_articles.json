@@ -1,0 +1,158 @@
+{
+  "articles": [
+    {
+      "title": "Attention Is All You Need",
+      "abstract": "The dominant sequence transduction models are based on complex recurrent or convolutional neural networks that include an encoder and a decoder. The best performing models also connect the encoder and decoder through an attention mechanism. We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely.",
+      "summary": "Статья представляет архитектуру Transformer, которая использует только механизмы внимания без рекуррентных или сверточных слоев. Это революционный подход к обработке последовательностей, который стал основой для современных языковых моделей типа GPT и BERT.",
+      "authors": [
+        {
+          "name": "Ashish Vaswani",
+          "affiliation": "Google Brain"
+        },
+        {
+          "name": "Noam Shazeer",
+          "affiliation": "Google Brain"
+        },
+        {
+          "name": "Niki Parmar",
+          "affiliation": "Google Research"
+        }
+      ],
+      "source": "arXiv",
+      "doi": "10.48550/arXiv.1706.03762",
+      "publication_date": "2017-06-12",
+      "topics": [
+        "machine learning",
+        "deep learning",
+        "natural language processing",
+        "transformers",
+        "attention mechanism"
+      ],
+      "url": "https://arxiv.org/abs/1706.03762"
+    },
+    {
+      "title": "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding",
+      "abstract": "We introduce a new language representation model called BERT, which stands for Bidirectional Encoder Representations from Transformers. Unlike recent language representation models, BERT is designed to pre-train deep bidirectional representations from unlabeled text by jointly conditioning on both left and right context in all layers.",
+      "summary": "BERT - это модель предобучения для понимания естественного языка, которая использует двунаправленные трансформеры. Модель обучается на больших объемах текста и может быть дообучена для различных задач NLP с минимальными изменениями архитектуры.",
+      "authors": [
+        {
+          "name": "Jacob Devlin",
+          "affiliation": "Google AI Language"
+        },
+        {
+          "name": "Ming-Wei Chang",
+          "affiliation": "Google AI Language"
+        },
+        {
+          "name": "Kenton Lee",
+          "affiliation": "Google AI Language"
+        }
+      ],
+      "source": "arXiv",
+      "doi": "10.48550/arXiv.1810.04805",
+      "publication_date": "2018-10-11",
+      "topics": [
+        "natural language processing",
+        "transformers",
+        "pre-training",
+        "language models",
+        "transfer learning"
+      ],
+      "url": "https://arxiv.org/abs/1810.04805"
+    },
+    {
+      "title": "Deep Residual Learning for Image Recognition",
+      "abstract": "Deeper neural networks are more difficult to train. We present a residual learning framework to ease the training of networks that are substantially deeper than those used previously. We explicitly reformulate the layers as learning residual functions with reference to the layer inputs, instead of learning unreferenced functions.",
+      "summary": "ResNet представляет концепцию остаточных связей (skip connections), которые позволяют обучать очень глубокие нейронные сети. Эта архитектура решает проблему затухающих градиентов и позволяет создавать сети с сотнями слоев для задач компьютерного зрения.",
+      "authors": [
+        {
+          "name": "Kaiming He",
+          "affiliation": "Microsoft Research"
+        },
+        {
+          "name": "Xiangyu Zhang",
+          "affiliation": "Microsoft Research"
+        },
+        {
+          "name": "Shaoqing Ren",
+          "affiliation": "Microsoft Research"
+        },
+        {
+          "name": "Jian Sun",
+          "affiliation": "Microsoft Research"
+        }
+      ],
+      "source": "arXiv",
+      "doi": "10.48550/arXiv.1512.03385",
+      "publication_date": "2015-12-10",
+      "topics": [
+        "computer vision",
+        "deep learning",
+        "convolutional neural networks",
+        "image recognition",
+        "residual networks"
+      ],
+      "url": "https://arxiv.org/abs/1512.03385"
+    },
+    {
+      "title": "Generative Adversarial Networks",
+      "abstract": "We propose a new framework for estimating generative models via an adversarial process, in which we simultaneously train two models: a generative model G that captures the data distribution, and a discriminative model D that estimates the probability that a sample came from the training data rather than G.",
+      "summary": "GAN - это архитектура для генеративного моделирования, где две нейронные сети соревнуются друг с другом. Генератор создает синтетические данные, а дискриминатор пытается отличить их от реальных. Этот подход произвел революцию в генерации изображений, текста и других данных.",
+      "authors": [
+        {
+          "name": "Ian Goodfellow",
+          "affiliation": "Université de Montréal"
+        },
+        {
+          "name": "Jean Pouget-Abadie",
+          "affiliation": "Université de Montréal"
+        },
+        {
+          "name": "Mehdi Mirza",
+          "affiliation": "Université de Montréal"
+        }
+      ],
+      "source": "arXiv",
+      "doi": "10.48550/arXiv.1406.2661",
+      "publication_date": "2014-06-10",
+      "topics": [
+        "generative models",
+        "deep learning",
+        "adversarial training",
+        "image generation",
+        "unsupervised learning"
+      ],
+      "url": "https://arxiv.org/abs/1406.2661"
+    },
+    {
+      "title": "Neural Machine Translation by Jointly Learning to Align and Translate",
+      "abstract": "Neural machine translation is a recently proposed approach to machine translation. Unlike the traditional statistical machine translation, the neural machine translation aims at building a single neural network that can be jointly tuned to maximize the translation performance.",
+      "summary": "Статья представляет механизм внимания (attention mechanism) для нейронного машинного перевода. Это позволяет модели фокусироваться на релевантных частях входного предложения при генерации каждого слова перевода, значительно улучшая качество перевода длинных предложений.",
+      "authors": [
+        {
+          "name": "Dzmitry Bahdanau",
+          "affiliation": "Jacobs University Bremen"
+        },
+        {
+          "name": "Kyunghyun Cho",
+          "affiliation": "Université de Montréal"
+        },
+        {
+          "name": "Yoshua Bengio",
+          "affiliation": "Université de Montréal"
+        }
+      ],
+      "source": "arXiv",
+      "doi": "10.48550/arXiv.1409.0473",
+      "publication_date": "2014-09-01",
+      "topics": [
+        "machine translation",
+        "attention mechanism",
+        "sequence to sequence",
+        "natural language processing",
+        "neural networks"
+      ],
+      "url": "https://arxiv.org/abs/1409.0473"
+    }
+  ]
+}

@@ -41,6 +41,11 @@ class TFIDFRecommender:
         preferences: List
     ) -> np.ndarray:
         """Построить профиль пользователя из кортежей (interaction, article)"""
+        # Определяем размерность векторов
+        if self.tfidf_matrix is None:
+            raise ValueError("Recommender not fitted. Call fit() first.")
+        
+        vector_size = self.tfidf_matrix.shape[1]
         weighted_vectors = []
         
         # Веса для типов взаимодействий
@@ -54,19 +59,33 @@ class TFIDFRecommender:
         # Добавляем векторы из взаимодействий
         for interaction, article in interactions:
             if article and article.tfidf_vector:
-                vector = self.deserialize_vector(article.tfidf_vector)
-                weight = weights.get(interaction.interaction_type.value, 0.5)
-                weighted_vectors.append(vector * weight)
+                try:
+                    vector = self.deserialize_vector(article.tfidf_vector)
+                    # Проверяем размерность
+                    if len(vector) == vector_size:
+                        weight = weights.get(interaction.interaction_type.value, 0.5)
+                        weighted_vectors.append(vector * weight)
+                except Exception as e:
+                    print(f"Warning: Failed to deserialize vector for article {article.id}: {e}")
+                    continue
         
         # Добавляем векторы из предпочтений
         for pref in preferences:
-            topic_vector = self.get_vector(pref.topic)
-            weighted_vectors.append(topic_vector * pref.weight)
+            try:
+                topic_vector = self.get_vector(pref.topic)
+                # Проверяем размерность
+                if len(topic_vector) == vector_size:
+                    weighted_vectors.append(topic_vector * pref.weight)
+            except Exception as e:
+                print(f"Warning: Failed to get vector for topic {pref.topic}: {e}")
+                continue
         
         if not weighted_vectors:
             # Если нет данных, возвращаем нулевой вектор
-            return np.zeros(self.tfidf_matrix.shape[1])
+            return np.zeros(vector_size)
         
+        # Преобразуем в numpy array и вычисляем среднее
+        weighted_vectors = np.array(weighted_vectors)
         return np.mean(weighted_vectors, axis=0)
     
     def recommend(

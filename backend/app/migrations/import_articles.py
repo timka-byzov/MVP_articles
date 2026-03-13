@@ -1,7 +1,7 @@
 import json
 import sys
 from sqlmodel import Session, select
-from app.database import engine
+from app.database import sync_engine
 from app.models.article import Article
 from app.services.recommender import TFIDFRecommender
 from datetime import datetime
@@ -29,7 +29,7 @@ def import_articles(json_path: str = "/data/articles.json", clean: bool = False)
         print("No articles to import!")
         return
     
-    with Session(engine) as session:
+    with Session(sync_engine) as session:
         # Очистка если нужно
         if clean:
             print("Cleaning existing articles...")

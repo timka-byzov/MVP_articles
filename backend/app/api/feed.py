@@ -5,7 +5,7 @@ from app.models.article import Article
 from app.models.interaction import UserInteraction
 from app.api.auth import current_active_user
 from app.database import get_session
-from app.services.recommender import TFIDFRecommender
+from app.services.recommender_cache import RecommenderCache
 from app.services.user_profile import UserProfileService
 from typing import List, Dict
 from uuid import UUID
@@ -30,24 +30,16 @@ async def get_feed(
     # Исключаем только скрытые статьи, а не все взаимодействия
     exclude_ids = profile_service.get_hidden_article_ids(user.id)
     
-    # Отладка
-    print(f"DEBUG: Hidden article IDs: {exclude_ids}")
-    print(f"DEBUG: Number of hidden: {len(exclude_ids)}")
+    # Получаем закэшированный рекомендатель
+    recommender = RecommenderCache.get_recommender(session)
     
-    # Получаем все статьи
-    articles = list(session.exec(select(Article)).all())
-    
-    if not articles:
+    if recommender is None:
         return {
             "articles": [],
             "total": 0,
             "limit": limit,
             "offset": offset
         }
-    
-    # Инициализируем рекомендатель
-    recommender = TFIDFRecommender()
-    recommender.fit(articles)
     
     # Строим профиль пользователя
     user_profile = recommender.build_user_profile(interactions, preferences)
@@ -59,13 +51,8 @@ async def get_feed(
         exclude_ids=exclude_ids
     )
     
-    print(f"DEBUG FEED: recommended_ids = {recommended_ids}")
-    print(f"DEBUG FEED: len(recommended_ids) = {len(recommended_ids)}")
-    
     # Применяем пагинацию
     page_ids = recommended_ids[offset:offset + limit]
-    
-    print(f"DEBUG FEED: page_ids = {page_ids}")
     
     # Получаем статьи
     recommended_articles = []

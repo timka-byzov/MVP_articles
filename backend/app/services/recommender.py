@@ -99,9 +99,6 @@ class TFIDFRecommender:
         if exclude_ids is None:
             exclude_ids = []
         
-        print(f"DEBUG RECOMMENDER: exclude_ids = {exclude_ids}")
-        print(f"DEBUG RECOMMENDER: article_ids = {self.article_ids}")
-        
         # Вычисляем сходство
         similarities = cosine_similarity(
             user_profile.reshape(1, -1),
@@ -115,9 +112,6 @@ class TFIDFRecommender:
             if article_id in exclude_ids:
                 mask[i] = False
                 excluded_count += 1
-        
-        print(f"DEBUG RECOMMENDER: excluded {excluded_count} articles")
-        print(f"DEBUG RECOMMENDER: mask = {mask}")
         
         # Применяем маску
         filtered_similarities = similarities.copy()

@@ -4,6 +4,7 @@ from sqlmodel import Session, select
 from app.database import sync_engine
 from app.models.article import Article
 from app.services.recommender import TFIDFRecommender
+from app.services.recommender_cache import RecommenderCache
 from datetime import datetime
 import argparse
 
@@ -81,6 +82,10 @@ def import_articles(json_path: str = "/data/articles.json", clean: bool = False)
         
         session.commit()
         print(f"✓ Successfully imported {len(articles)} articles")
+        
+        # Сбрасываем кэш рекомендателя
+        RecommenderCache.invalidate()
+        print("✓ Recommender cache invalidated")
 
 
 if __name__ == "__main__":
